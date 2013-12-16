@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le: Lun 16 Décembre 2013 à 15:13
+-- Généré le: Lun 16 Décembre 2013 à 17:17
 -- Version du serveur: 5.6.12-log
 -- Version de PHP: 5.4.12
 
@@ -134,9 +134,10 @@ INSERT INTO `bi_commentaires` (`CommentaireID`, `EmpruntID`, `Commentaire`, `dat
 CREATE TABLE IF NOT EXISTS `bi_copiesarticles` (
   `NoArticle` decimal(7,0) NOT NULL,
   `ISBN` char(17) NOT NULL,
-  `IndicateurDisponible` char(1) NOT NULL,
+  `IndicateurDisponible` int(11) DEFAULT NULL,
   PRIMARY KEY (`NoArticle`,`ISBN`),
-  KEY `FK_CopiesArticles_ISBN` (`ISBN`)
+  KEY `FK_CopiesArticles_ISBN` (`ISBN`),
+  KEY `IndicateurDisponible` (`IndicateurDisponible`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -144,11 +145,11 @@ CREATE TABLE IF NOT EXISTS `bi_copiesarticles` (
 --
 
 INSERT INTO `bi_copiesarticles` (`NoArticle`, `ISBN`, `IndicateurDisponible`) VALUES
-('1', '978-2-70964-192-0', '0'),
-('2', '978-2-70964-192-0', '1'),
-('3', '978-2-12345-012-1', '0'),
-('4', '978-2-12345-012-1', '1'),
-('5', '008888528111', '1');
+('1', '978-2-70964-192-0', 1),
+('2', '978-2-70964-192-0', 1),
+('3', '978-2-12345-012-1', 1),
+('4', '978-2-12345-012-1', 1),
+('5', '008888528111', 1);
 
 -- --------------------------------------------------------
 
@@ -191,6 +192,29 @@ INSERT INTO `bi_emprunts` (`EmpruntID`, `NoMembre`, `NoArticle`, `dateEmprunt`, 
 ('8', '1', '4', '2012-09-05 00:00:00', '2012-09-09 00:00:00', '2012-09-12 00:00:00', NULL, '1.00', '1', '0.00', NULL, NULL, '978-2-12345-012-1'),
 ('9', '2', '3', '2012-09-05 00:00:00', '2012-09-09 00:00:00', '2012-09-12 00:00:00', NULL, '1.00', '0', '0.00', NULL, NULL, '978-2-12345-012-1'),
 ('10', '2', '5', '2014-09-05 00:00:00', '2014-09-09 00:00:00', '2014-09-12 00:00:00', NULL, '1.25', '0', '0.00', NULL, NULL, '008888528111');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `bi_etatarticle`
+--
+
+CREATE TABLE IF NOT EXISTS `bi_etatarticle` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `valeur` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+--
+-- Contenu de la table `bi_etatarticle`
+--
+
+INSERT INTO `bi_etatarticle` (`id`, `valeur`) VALUES
+(1, 'DISPONIBLE'),
+(2, 'PRÊTÉ'),
+(3, 'RÉSERVÉ'),
+(4, 'PERDU'),
+(5, 'EN RÉPARATION');
 
 -- --------------------------------------------------------
 
@@ -357,8 +381,7 @@ CREATE TABLE IF NOT EXISTS `bi_reservations` (
 
 INSERT INTO `bi_reservations` (`IdMembre`, `IdArticle`, `DateReservation`, `EstActif`) VALUES
 ('1', '008888528111', '2013-12-16', 1),
-('1', '978-2-12345-012-1', '2013-12-16', 1),
-('1', '978-2-70964-192-0', '2013-12-16', 1);
+('1', '978-2-12345-012-1', '2013-12-16', 1);
 
 -- --------------------------------------------------------
 
@@ -496,6 +519,7 @@ ALTER TABLE `bi_commentaires`
 -- Contraintes pour la table `bi_copiesarticles`
 --
 ALTER TABLE `bi_copiesarticles`
+  ADD CONSTRAINT `bi_copiesarticles_ibfk_1` FOREIGN KEY (`IndicateurDisponible`) REFERENCES `bi_etatarticle` (`id`),
   ADD CONSTRAINT `FK_CopiesArticles_ISBN` FOREIGN KEY (`ISBN`) REFERENCES `bi_articles` (`ISBN`);
 
 --

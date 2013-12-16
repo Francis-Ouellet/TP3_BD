@@ -10,14 +10,8 @@
 
     <ui:define name="body">
         
-        <h:link target="index">Retour à l'accueil</h:link>
-        
-        <h:form>
-            <h:outputText>#{sessionBean.message}</h:outputText>
-            <h:commandLink action="index">Retour à l'accueil</h:commandLink>
-        </h:form>
-        
-        
+        <h:outputText value="#{sessionBean.message}" />
+        <h:outputLink value="index.xhtml">Retour à l'accueil</h:outputLink>
     </ui:define>
 
 </ui:composition>
