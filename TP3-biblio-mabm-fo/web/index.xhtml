@@ -23,7 +23,7 @@
 
                 <h:commandButton value="Afficher" action="#{sessionBean.RechercherArticles()}"></h:commandButton>
 
-                <c:if test="#{sessionBean.articlesTrouves != null}">
+                <c:if test="#{sessionBean.articlesTrouves.size() > 0}">
                     <h:dataTable value="#{sessionBean.articlesTrouves}" var="item">
 
                         <h:column>
@@ -44,28 +44,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="Réservation" />
                                 </f:facet>
-                                <c:choose>
-                                    <c:when test="#{sessionBean.succesfulReservation.size() > 0}">
-                                        <c:forEach var="reserved" items="#{sessionBean.succesfulReservation}" >
-
-                                            <c:choose>
-                                                <c:when test="#{reserved.equals(item.isbn)}">
-                                                    <h:outputText value="Réservé!" />
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <h:commandLink action="#{sessionBean.Reserver(item.isbn)}">Réserver</h:commandLink>
-                                                </c:otherwise>
-                                            </c:choose>
-
-                                        </c:forEach>
-                                    </c:when>
-                                    
-                                    <c:otherwise>
-                                        <h:commandLink action="#{sessionBean.Reserver(item.isbn)}">Réserver</h:commandLink>
-                                    </c:otherwise>
-                                    
-                                </c:choose>
-                                    
+                                <h:commandLink action="#{sessionBean.Reserver(item.isbn)}">Réserver</h:commandLink>
                             </h:column>
                         </c:if>
 

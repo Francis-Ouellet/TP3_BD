@@ -31,8 +31,8 @@ public class sessionBean {
     private String rechAuteur;
     // Articles trouvés
     private List<BiArticles> articlesTrouves;
-    // Marqueur pour une réservation réussie
-    private ArrayList<String> succesfulReservation;
+    // Message de retour pour l'utilisateur
+    private String message;
     // Utilitaire pour la recherche
     BibliUtil utilitaire;
     
@@ -46,7 +46,7 @@ public class sessionBean {
         this.rechTitre = null;
         this.rechAuteur = null;
         this.articlesTrouves = null;
-        this.succesfulReservation = new ArrayList<String>();
+        this.message = null;
         this.userType = "invite";
         this.utilitaire = new BibliUtil();
     }
@@ -58,7 +58,7 @@ public class sessionBean {
         this.rechTitre = null;
         this.rechAuteur = null;
         this.articlesTrouves = null;
-        this.succesfulReservation = new ArrayList<String>();
+        this.message = null;
         this.userType = userType;
         this.utilitaire = new BibliUtil();
     }
@@ -85,7 +85,8 @@ public class sessionBean {
             return "index";
         }
         else{
-            return "erreur";
+            this.message = "Une erreur est survenue lors de la connexion";
+            return "message";
         }
     }
     
@@ -100,11 +101,11 @@ public class sessionBean {
     public String Reserver(String ISBN){
         
         if(this.utilitaire.ReserverArticle(ISBN, this.username, new Date())){
-            this.succesfulReservation.add(ISBN);
-            return "index";
+            this.message = "L'article a été réservé avec succès!";
+            return "message";
         }
-        
-        return "erreur";
+        this.message = "L'article n'a pas pu être réservé.";
+        return "message";
     }
 
     // Accesseurs
@@ -208,16 +209,16 @@ public class sessionBean {
     }
 
     /**
-     * @return the succesfulReservation
+     * @return the message
      */
-    public ArrayList<String> getSuccesfulReservation() {
-        return succesfulReservation;
+    public String getMessage() {
+        return message;
     }
 
     /**
-     * @param succesfulReservation the succesfulReservation to set
+     * @param message the message to set
      */
-    public void setSuccesfulReservation(ArrayList<String> succesfulReservation) {
-        this.succesfulReservation = succesfulReservation;
+    public void setMessage(String message) {
+        this.message = message;
     }
 }
