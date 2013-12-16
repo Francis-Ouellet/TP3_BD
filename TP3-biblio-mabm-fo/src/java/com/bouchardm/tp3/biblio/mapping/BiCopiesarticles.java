@@ -1,5 +1,5 @@
 package com.bouchardm.tp3.biblio.mapping;
-// Generated 2013-12-14 16:42:46 by Hibernate Tools 3.2.1.GA
+// Generated 2013-12-16 12:24:15 by Hibernate Tools 3.2.1.GA
 
 
 import java.util.HashSet;
@@ -13,22 +13,21 @@ public class BiCopiesarticles  implements java.io.Serializable {
 
      private BiCopiesarticlesId id;
      private BiArticles biArticles;
-     private char indicateurDisponible;
+     private BiEtatarticle biEtatarticle;
      private Set<BiEmprunts> biEmpruntses = new HashSet<BiEmprunts>(0);
 
     public BiCopiesarticles() {
     }
 
 	
-    public BiCopiesarticles(BiCopiesarticlesId id, BiArticles biArticles, char indicateurDisponible) {
+    public BiCopiesarticles(BiCopiesarticlesId id, BiArticles biArticles) {
         this.id = id;
         this.biArticles = biArticles;
-        this.indicateurDisponible = indicateurDisponible;
     }
-    public BiCopiesarticles(BiCopiesarticlesId id, BiArticles biArticles, char indicateurDisponible, Set<BiEmprunts> biEmpruntses) {
+    public BiCopiesarticles(BiCopiesarticlesId id, BiArticles biArticles, BiEtatarticle biEtatarticle, Set<BiEmprunts> biEmpruntses) {
        this.id = id;
        this.biArticles = biArticles;
-       this.indicateurDisponible = indicateurDisponible;
+       this.biEtatarticle = biEtatarticle;
        this.biEmpruntses = biEmpruntses;
     }
    
@@ -46,12 +45,12 @@ public class BiCopiesarticles  implements java.io.Serializable {
     public void setBiArticles(BiArticles biArticles) {
         this.biArticles = biArticles;
     }
-    public char getIndicateurDisponible() {
-        return this.indicateurDisponible;
+    public BiEtatarticle getBiEtatarticle() {
+        return this.biEtatarticle;
     }
     
-    public void setIndicateurDisponible(char indicateurDisponible) {
-        this.indicateurDisponible = indicateurDisponible;
+    public void setBiEtatarticle(BiEtatarticle biEtatarticle) {
+        this.biEtatarticle = biEtatarticle;
     }
     public Set<BiEmprunts> getBiEmpruntses() {
         return this.biEmpruntses;
