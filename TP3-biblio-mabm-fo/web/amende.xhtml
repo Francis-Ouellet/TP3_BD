@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+        <ui:composition template="./template.xhtml">
+
+            <ui:define name="top">
+                top
+            </ui:define>
+
+            <ui:define name="body">
+                <h:form>
+                    
+                    <h:outputLabel for="userMembre">
+                        <h:outputText value="Nom d'utilisateur du membre"></h:outputText>
+                    </h:outputLabel>
+                    <h:inputText id="userMembre" value="#{sessionBean.userMembre}" />
+
+                    <h:commandButton value="Voir les amendes du membres" action="#{sessionBean.RechercherAmendes()}"></h:commandButton>
+                </h:form>
+                
+                
+                    
+                <h1>Emprunts</h1>
+                <h:dataTable value="#{sessionBean.amendeTrouve.toArray()}" var="item">
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Titre"/>
+                        </f:facet>
+                        <h:outputText value="#{item.biCopiesarticles.biArticles.titre}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Amendes" />
+                        </f:facet>
+
+                        <c:if test="#{!item.totalAmende.equals(null)}">
+                            <h:form>
+                                <h:commandButton value="Payer #{item.totalAmende}" action="#" />
+                            </h:form>
+                        </c:if>
+
+                    </h:column>
+
+                    <c:if test="#{sessionBean.logged}">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Retour d'article" />
+                            </f:facet>
+
+                            <h:form>
+                                <h:commandButton value="Retourner" action="#" />
+                            </h:form>
+
+                        </h:column>
+                    </c:if>
+
+                </h:dataTable>
+                
+                
+                
+                
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

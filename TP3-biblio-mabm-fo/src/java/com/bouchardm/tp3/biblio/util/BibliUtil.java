@@ -6,9 +6,11 @@ package com.bouchardm.tp3.biblio.util;
 
 import com.bouchardm.tp3.biblio.mapping.BiArticles;
 import com.bouchardm.tp3.biblio.mapping.BiAuteurs;
+import com.bouchardm.tp3.biblio.mapping.BiEmprunts;
 import com.bouchardm.tp3.biblio.mapping.BiMembres;
 import com.bouchardm.tp3.biblio.mapping.BiReservations;
 import com.bouchardm.tp3.biblio.mapping.BiReservationsId;
+import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,6 +80,23 @@ public class BibliUtil {
         catch(Exception e){
             return null;
         }
+    }
+    
+    public List<BiEmprunts> RechercheAmende(String userMembre){
+           
+        List<BiEmprunts> lesEmprunts = null;
+            
+        try {
+            // Récupère tous les articles non réservés
+            Transaction tx = session.beginTransaction();
+            Query req = session.createQuery("FROM BiEmprunts emprunt WHERE emprunt.biMembres.login = '" + userMembre + "'");
+            lesEmprunts = (List<BiEmprunts>)req.list();
+            
+            return lesEmprunts;
+        } catch (Exception e) {
+            return null;
+        }
+        
     }
     
     public String Connexion(String username, String password){
@@ -208,4 +227,6 @@ public class BibliUtil {
         } 
         return buf.toString();
     } 
+    
+    
 }

@@ -5,7 +5,10 @@
 package com.bouchardm.tp3.biblio;
 
 import com.bouchardm.tp3.biblio.mapping.BiArticles;
+import com.bouchardm.tp3.biblio.mapping.BiEmprunts;
+import com.bouchardm.tp3.biblio.mapping.BiMembres;
 import com.bouchardm.tp3.biblio.util.BibliUtil;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,12 +32,21 @@ public class sessionBean {
     // Paramètres d'une recherche d'article
     private String rechTitre;
     private String rechAuteur;
+    
     // Articles trouvés
     private List<BiArticles> articlesTrouves;
     // Message de retour pour l'utilisateur
     private String message;
     // Utilitaire pour la recherche
     BibliUtil utilitaire;
+    // Paramètres d'une recherche de membre
+    private String userMembre;
+
+    
+
+    
+    //Amende trouvé
+    private List<BiEmprunts> amendesTrouves;
     
     /**
      * Creates a new instance of sessionBean
@@ -74,6 +86,15 @@ public class sessionBean {
         }
         
         return "index";
+    }
+    
+    public void RechercherAmendes(){
+       if (userMembre.length() > 0 && this.logged) {
+            amendesTrouves = utilitaire.RechercheAmende(userMembre);
+       } else
+       {
+           amendesTrouves = null;
+       }
     }
     
     public String Connexion(){
@@ -220,5 +241,29 @@ public class sessionBean {
      */
     public void setMessage(String message) {
         this.message = message;
+    }
+    
+    
+    public List<BiEmprunts> getAmendeTrouve() {
+        return amendesTrouves;
+    }
+
+    public void setAmendeTrouve(List<BiEmprunts> amendeTrouve) {
+        this.amendesTrouves = amendeTrouve;
+    }
+    
+    public String getUserMembre() {
+        return userMembre;
+    }
+
+    public void setUserMembre(String userMembre) {
+        this.userMembre = userMembre;
+    }
+    
+    public static boolean isNull(BigDecimal chiffre) {
+        if (chiffre == null) {
+            return true;
+        }
+        return false;
     }
 }
