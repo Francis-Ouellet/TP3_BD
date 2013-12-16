@@ -25,6 +25,10 @@ public class BiEmprunts  implements java.io.Serializable {
      private char indicateurPerte;
      private BigDecimal prixUnitaire;
      private BigDecimal totalAmende;
+
+   
+     private Boolean amende;
+     private Boolean retourner;
      private Set<BiCommentaires> biCommentaireses = new HashSet<BiCommentaires>(0);
 
     public BiEmprunts() {
@@ -38,8 +42,11 @@ public class BiEmprunts  implements java.io.Serializable {
         this.dateEmprunt = dateEmprunt;
         this.dateRetourPrevue = dateRetourPrevue;
         this.amendeParJour = amendeParJour;
+        
         this.indicateurPerte = indicateurPerte;
         this.prixUnitaire = prixUnitaire;
+        
+        
     }
     public BiEmprunts(int empruntId, BiCopiesarticles biCopiesarticles, BiModespaiements biModespaiements, BiMembres biMembres, Date dateEmprunt, Date dateRetourPrevue, Date dateRetour, Integer nbJoursDeRetard, BigDecimal amendeParJour, char indicateurPerte, BigDecimal prixUnitaire, BigDecimal totalAmende, Set<BiCommentaires> biCommentaireses) {
        this.empruntId = empruntId;
@@ -55,6 +62,22 @@ public class BiEmprunts  implements java.io.Serializable {
        this.prixUnitaire = prixUnitaire;
        this.totalAmende = totalAmende;
        this.biCommentaireses = biCommentaireses;
+    }
+    
+     public Boolean getAmende() {
+        return amende;
+    }
+
+    public void setAmende(Boolean amende) {
+        this.amende = amende;
+    }
+
+    public Boolean getRetourner() {
+        return retourner;
+    }
+
+    public void setRetourner(Boolean retourner) {
+        this.retourner = retourner;
     }
    
     public int getEmpruntId() {
