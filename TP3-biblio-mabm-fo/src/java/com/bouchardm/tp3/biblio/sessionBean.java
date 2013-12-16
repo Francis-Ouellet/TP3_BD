@@ -127,6 +127,10 @@ public class sessionBean {
         return "message";
     }
     
+    public void PayerAmende(int idEmprunt) {
+        this.utilitaire.PayerAmende(idEmprunt);
+    }
+    
     public List<BiReservations> ObtenirReservations(){
         return this.utilitaire.ObtenirReservations(this.username);
     }
