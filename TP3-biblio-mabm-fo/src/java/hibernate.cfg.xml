@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/bibli?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">qwerty123</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <property name="hibernate.query.factory_class">org.hibernate.hql.classic.ClassicQueryTranslatorFactory</property>
+    <mapping resource="com/bouchardm/tp3/biblio/mapping/BiMembres.hbm.xml"/>
+    <mapping resource="com/bouchardm/tp3/biblio/mapping/BiMaisonseditions.hbm.xml"/>
+    <mapping resource="com/bouchardm/tp3/biblio/mapping/BiTypesmembres.hbm.xml"/>
+    <mapping resource="com/bouchardm/tp3/biblio/mapping/BiProvinces.hbm.xml"/>
+    <mapping resource="com/bouchardm/tp3/biblio/mapping/BiAuteurs.hbm.xml"/>
+    <mapping resource="com/bouchardm/tp3/biblio/mapping/BiReservations.hbm.xml"/>
+    <mapping resource="com/bouchardm/tp3/biblio/mapping/BiEmprunts.hbm.xml"/>
+    <mapping resource="com/bouchardm/tp3/biblio/mapping/BiModespaiements.hbm.xml"/>
+    <mapping resource="com/bouchardm/tp3/biblio/mapping/BiTypearticles.hbm.xml"/>
+    <mapping resource="com/bouchardm/tp3/biblio/mapping/BiCopiesarticles.hbm.xml"/>
+    <mapping resource="com/bouchardm/tp3/biblio/mapping/BiArticles.hbm.xml"/>
+    <mapping resource="com/bouchardm/tp3/biblio/mapping/BiCommentaires.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

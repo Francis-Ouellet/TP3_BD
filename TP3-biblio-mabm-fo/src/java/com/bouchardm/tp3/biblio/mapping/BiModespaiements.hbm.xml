@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-12-14 16:42:48 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.bouchardm.tp3.biblio.mapping.BiModespaiements" table="bi_modespaiements" catalog="bibli">
+        <id name="modePaiementCd" type="string">
+            <column name="ModePaiementCd" length="20" />
+            <generator class="assigned" />
+        </id>
+        <property name="cdDescFr" type="string">
+            <column name="CdDescFr" length="50" not-null="true" />
+        </property>
+        <property name="cdDescEn" type="string">
+            <column name="CdDescEn" length="50" not-null="true" />
+        </property>
+        <set name="biEmpruntses" inverse="true">
+            <key>
+                <column name="ModePaiementCd" length="20" />
+            </key>
+            <one-to-many class="com.bouchardm.tp3.biblio.mapping.BiEmprunts" />
+        </set>
+    </class>
+</hibernate-mapping>

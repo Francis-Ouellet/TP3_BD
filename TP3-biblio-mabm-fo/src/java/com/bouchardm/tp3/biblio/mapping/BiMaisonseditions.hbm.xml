@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-12-14 16:42:48 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.bouchardm.tp3.biblio.mapping.BiMaisonseditions" table="bi_maisonseditions" catalog="bibli">
+        <id name="maisonEditionId" type="long">
+            <column name="MaisonEditionID" precision="10" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="biProvinces" class="com.bouchardm.tp3.biblio.mapping.BiProvinces" fetch="select">
+            <column name="ProvCode" length="2" not-null="true" />
+        </many-to-one>
+        <property name="nom" type="string">
+            <column name="Nom" length="50" not-null="true" />
+        </property>
+        <property name="adresse" type="string">
+            <column name="Adresse" length="200" not-null="true" />
+        </property>
+        <property name="ville" type="string">
+            <column name="Ville" length="50" not-null="true" />
+        </property>
+        <property name="cdPostal" type="string">
+            <column name="CdPostal" length="7" not-null="true" />
+        </property>
+        <property name="pays" type="string">
+            <column name="Pays" length="50" not-null="true" />
+        </property>
+        <property name="noTel" type="string">
+            <column name="NoTel" length="14" not-null="true" />
+        </property>
+        <property name="noFax" type="string">
+            <column name="NoFax" length="14" />
+        </property>
+        <property name="email" type="string">
+            <column name="Email" length="100" not-null="true" />
+        </property>
+        <property name="siteInternet" type="string">
+            <column name="SiteInternet" length="100" />
+        </property>
+        <property name="contact" type="string">
+            <column name="Contact" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-12-14 16:42:48 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.bouchardm.tp3.biblio.mapping.BiCommentaires" table="bi_commentaires" catalog="bibli">
+        <id name="commentaireId" type="int">
+            <column name="CommentaireID" precision="7" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="biEmprunts" class="com.bouchardm.tp3.biblio.mapping.BiEmprunts" fetch="select">
+            <column name="EmpruntID" precision="7" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="commentaire" type="string">
+            <column name="Commentaire" length="250" not-null="true" />
+        </property>
+        <property name="datetimeCommentaire" type="timestamp">
+            <column name="datetimeCommentaire" length="19" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

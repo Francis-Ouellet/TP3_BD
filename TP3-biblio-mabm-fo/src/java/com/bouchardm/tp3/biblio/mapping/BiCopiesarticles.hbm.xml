@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-12-14 16:42:48 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.bouchardm.tp3.biblio.mapping.BiCopiesarticles" table="bi_copiesarticles" catalog="bibli">
+        <composite-id name="id" class="com.bouchardm.tp3.biblio.mapping.BiCopiesarticlesId">
+            <key-property name="noArticle" type="int">
+                <column name="NoArticle" precision="7" scale="0" />
+            </key-property>
+            <key-property name="isbn" type="string">
+                <column name="ISBN" length="17" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="biArticles" class="com.bouchardm.tp3.biblio.mapping.BiArticles" update="false" insert="false" fetch="select">
+            <column name="ISBN" length="17" not-null="true" />
+        </many-to-one>
+        <property name="indicateurDisponible" type="char">
+            <column name="IndicateurDisponible" length="1" not-null="true" />
+        </property>
+        <set name="biEmpruntses" inverse="true">
+            <key>
+                <column name="NoArticle" precision="7" scale="0" not-null="true" />
+                <column name="ISBN" length="17" not-null="true" />
+            </key>
+            <one-to-many class="com.bouchardm.tp3.biblio.mapping.BiEmprunts" />
+        </set>
+    </class>
+</hibernate-mapping>

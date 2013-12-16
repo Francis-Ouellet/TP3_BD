@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-12-14 16:42:48 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.bouchardm.tp3.biblio.mapping.BiTypearticles" table="bi_typearticles" catalog="bibli">
+        <id name="typeArticle" type="string">
+            <column name="TypeArticle" length="20" />
+            <generator class="assigned" />
+        </id>
+        <property name="typeArticleDescFr" type="string">
+            <column name="TypeArticleDescFr" length="80" not-null="true" />
+        </property>
+        <property name="typeArticleDescEn" type="string">
+            <column name="TypeArticleDescEn" length="80" not-null="true" />
+        </property>
+        <property name="amendeParJour" type="big_decimal">
+            <column name="AmendeParJour" precision="3" not-null="true" />
+        </property>
+        <set name="biArticleses" inverse="true">
+            <key>
+                <column name="TypeArticle" length="20" not-null="true" />
+            </key>
+            <one-to-many class="com.bouchardm.tp3.biblio.mapping.BiArticles" />
+        </set>
+    </class>
+</hibernate-mapping>

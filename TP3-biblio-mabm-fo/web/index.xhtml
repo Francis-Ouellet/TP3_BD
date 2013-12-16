@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core">
+    
+    <ui:composition template="./template.xhtml">
+        
+        <ui:define name="body">
+            <h:form>
+
+                <h:outputLabel for="txtTitre">
+                    <h:outputText value="Titre:"></h:outputText>
+                </h:outputLabel>
+                <h:inputText id="txtTitre" value="#{sessionBean.rechTitre}"></h:inputText>
+
+                <h:outputLabel for="txtAuteur">
+                    <h:outputText value="Auteur:"></h:outputText>
+                </h:outputLabel>
+                <h:inputText id="txtAuteur" value="#{sessionBean.rechAuteur}"></h:inputText>
+
+                <h:commandButton value="Afficher" action="#{sessionBean.RechercherArticles()}"></h:commandButton>
+
+                <c:if test="#{sessionBean.articlesTrouves != null}">
+                    <h:dataTable value="#{sessionBean.articlesTrouves}" var="item">
+
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Titre"/>
+                            </f:facet>
+                            <h:outputText value="#{item.titre}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Description" />
+                            </f:facet>
+                            <h:outputText value="#{item.resume}" />
+                        </h:column>
+                        
+                        <c:if test="#{sessionBean.logged}">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Réservation" />
+                                </f:facet>
+                                <c:choose>
+                                    <c:when test="#{sessionBean.succesfulReservation.size() > 0}">
+                                        <c:forEach var="reserved" items="#{sessionBean.succesfulReservation}" >
+
+                                            <c:choose>
+                                                <c:when test="#{reserved.equals(item.isbn)}">
+                                                    <h:outputText value="Réservé!" />
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <h:commandLink action="#{sessionBean.Reserver(item.isbn)}">Réserver</h:commandLink>
+                                                </c:otherwise>
+                                            </c:choose>
+
+                                        </c:forEach>
+                                    </c:when>
+                                    
+                                    <c:otherwise>
+                                        <h:commandLink action="#{sessionBean.Reserver(item.isbn)}">Réserver</h:commandLink>
+                                    </c:otherwise>
+                                    
+                                </c:choose>
+                                    
+                            </h:column>
+                        </c:if>
+
+                    </h:dataTable>
+                </c:if>
+                
+            </h:form>
+
+            
+
+        </ui:define>
+        
+    </ui:composition>
+    
+</html>
+

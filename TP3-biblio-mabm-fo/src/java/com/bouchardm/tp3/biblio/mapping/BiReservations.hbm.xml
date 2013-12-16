@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-12-14 16:42:48 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.bouchardm.tp3.biblio.mapping.BiReservations" table="bi_reservations" catalog="bibli">
+        <composite-id name="id" class="com.bouchardm.tp3.biblio.mapping.BiReservationsId">
+            <key-property name="idMembre" type="int">
+                <column name="IdMembre" precision="7" scale="0" />
+            </key-property>
+            <key-property name="idArticle" type="string">
+                <column name="IdArticle" length="17" />
+            </key-property>
+            <key-property name="dateReservation" type="date">
+                <column name="DateReservation" length="10" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="biArticles" class="com.bouchardm.tp3.biblio.mapping.BiArticles" update="false" insert="false" fetch="select">
+            <column name="IdArticle" length="17" not-null="true" />
+        </many-to-one>
+        <many-to-one name="biMembres" class="com.bouchardm.tp3.biblio.mapping.BiMembres" update="false" insert="false" fetch="select">
+            <column name="IdMembre" precision="7" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="estActif" type="boolean">
+            <column name="EstActif" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-catalog="bibli"/>
+  <table-filter match-name="bi_emprunts"/>
+  <table-filter match-name="bi_auteurs"/>
+  <table-filter match-name="bi_articles"/>
+  <table-filter match-name="bi_copiesarticles"/>
+  <table-filter match-name="bi_articlesauteurs"/>
+  <table-filter match-name="bi_reservations"/>
+  <table-filter match-name="bi_commentaires"/>
+  <table-filter match-name="bi_modespaiements"/>
+  <table-filter match-name="bi_provinces"/>
+  <table-filter match-name="bi_typesmembres"/>
+  <table-filter match-name="bi_typearticles"/>
+  <table-filter match-name="bi_membres"/>
+  <table-filter match-name="bi_maisonseditions"/>
+</hibernate-reverse-engineering>

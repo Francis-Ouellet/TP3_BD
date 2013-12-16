@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-12-14 16:42:48 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.bouchardm.tp3.biblio.mapping.BiAuteurs" table="bi_auteurs" catalog="bibli">
+        <id name="auteurId" type="int">
+            <column name="AuteurID" precision="7" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <property name="nom" type="string">
+            <column name="Nom" length="50" not-null="true" />
+        </property>
+        <property name="prenom" type="string">
+            <column name="Prenom" length="50" not-null="true" />
+        </property>
+        <property name="pays" type="string">
+            <column name="Pays" length="50" not-null="true" />
+        </property>
+        <property name="siteInternet" type="string">
+            <column name="SiteInternet" length="100" />
+        </property>
+        <property name="anneeNaissance" type="string">
+            <column name="AnneeNaissance" length="4" not-null="true" />
+        </property>
+        <property name="anneeDeces" type="string">
+            <column name="AnneeDeces" length="4" />
+        </property>
+        <set name="biArticleses" inverse="false" table="bi_articlesauteurs">
+            <key>
+                <column name="AuteurID" precision="7" scale="0" not-null="true" />
+            </key>
+            <many-to-many class="com.bouchardm.tp3.biblio.mapping.BiArticles">
+                <column name="ISBN" length="17" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-12-14 16:42:48 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.bouchardm.tp3.biblio.mapping.BiEmprunts" table="bi_emprunts" catalog="bibli">
+        <id name="empruntId" type="int">
+            <column name="EmpruntID" precision="7" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="biCopiesarticles" class="com.bouchardm.tp3.biblio.mapping.BiCopiesarticles" fetch="select">
+            <column name="NoArticle" precision="7" scale="0" not-null="true" />
+            <column name="ISBN" length="17" not-null="true" />
+        </many-to-one>
+        <many-to-one name="biModespaiements" class="com.bouchardm.tp3.biblio.mapping.BiModespaiements" fetch="select">
+            <column name="ModePaiementCd" length="20" />
+        </many-to-one>
+        <many-to-one name="biMembres" class="com.bouchardm.tp3.biblio.mapping.BiMembres" fetch="select">
+            <column name="NoMembre" precision="7" scale="0" not-null="true" />
+        </many-to-one>
+        <property name="dateEmprunt" type="timestamp">
+            <column name="dateEmprunt" length="19" not-null="true" />
+        </property>
+        <property name="dateRetourPrevue" type="timestamp">
+            <column name="dateRetourPrevue" length="19" not-null="true" />
+        </property>
+        <property name="dateRetour" type="timestamp">
+            <column name="dateRetour" length="19" />
+        </property>
+        <property name="nbJoursDeRetard" type="java.lang.Integer">
+            <column name="NbJoursDeRetard" />
+        </property>
+        <property name="amendeParJour" type="big_decimal">
+            <column name="AmendeParJour" precision="3" not-null="true" />
+        </property>
+        <property name="indicateurPerte" type="char">
+            <column name="IndicateurPerte" length="1" not-null="true" />
+        </property>
+        <property name="prixUnitaire" type="big_decimal">
+            <column name="PrixUnitaire" precision="5" not-null="true" />
+        </property>
+        <property name="totalAmende" type="big_decimal">
+            <column name="TotalAmende" precision="6" />
+        </property>
+        <set name="biCommentaireses" inverse="true">
+            <key>
+                <column name="EmpruntID" precision="7" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="com.bouchardm.tp3.biblio.mapping.BiCommentaires" />
+        </set>
+    </class>
+</hibernate-mapping>

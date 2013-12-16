@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-12-14 16:42:48 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.bouchardm.tp3.biblio.mapping.BiArticles" table="bi_articles" catalog="bibli">
+        <id name="isbn" type="string">
+            <column name="ISBN" length="17" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="biTypearticles" class="com.bouchardm.tp3.biblio.mapping.BiTypearticles" fetch="select">
+            <column name="TypeArticle" length="20" not-null="true" />
+        </many-to-one>
+        <property name="titre" type="string">
+            <column name="Titre" length="100" not-null="true" />
+        </property>
+        <property name="resume" type="string">
+            <column name="Resume" length="500" not-null="true" />
+        </property>
+        <property name="prixUnitaire" type="big_decimal">
+            <column name="PrixUnitaire" precision="5" not-null="true" />
+        </property>
+        <property name="indicateurEnCommande" type="char">
+            <column name="IndicateurEnCommande" length="1" not-null="true" />
+        </property>
+        <property name="quantiteEnCommande" type="short">
+            <column name="QuantiteEnCommande" precision="4" scale="0" not-null="true" />
+        </property>
+        <property name="dateParution" type="timestamp">
+            <column name="DateParution" length="19" not-null="true" />
+        </property>
+        <property name="maisonEditionId" type="int">
+            <column name="MaisonEditionID" precision="7" scale="0" not-null="true" />
+        </property>
+        <property name="langue" type="string">
+            <column name="Langue" length="2" not-null="true" />
+        </property>
+        <property name="ageMin" type="byte">
+            <column name="ageMin" not-null="true">
+                <comment>Indique l'&#226;ge minimum pour louer un article.</comment>
+            </column>
+        </property>
+        <set name="biCopiesarticleses" inverse="true">
+            <key>
+                <column name="ISBN" length="17" not-null="true" />
+            </key>
+            <one-to-many class="com.bouchardm.tp3.biblio.mapping.BiCopiesarticles" />
+        </set>
+        <set name="biAuteurses" inverse="true" table="bi_articlesauteurs">
+            <key>
+                <column name="ISBN" length="17" not-null="true" />
+            </key>
+            <many-to-many class="com.bouchardm.tp3.biblio.mapping.BiAuteurs">
+                <column name="AuteurID" precision="7" scale="0" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="biReservationses" inverse="true">
+            <key>
+                <column name="IdArticle" length="17" not-null="true" />
+            </key>
+            <one-to-many class="com.bouchardm.tp3.biblio.mapping.BiReservations" />
+        </set>
+    </class>
+</hibernate-mapping>

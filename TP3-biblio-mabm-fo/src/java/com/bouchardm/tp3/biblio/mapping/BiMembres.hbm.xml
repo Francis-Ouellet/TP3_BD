@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-12-14 16:42:48 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.bouchardm.tp3.biblio.mapping.BiMembres" table="bi_membres" catalog="bibli">
+        <id name="noMembre" type="int">
+            <column name="NoMembre" precision="7" scale="0" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="biProvinces" class="com.bouchardm.tp3.biblio.mapping.BiProvinces" fetch="select">
+            <column name="ProvCode" length="2" not-null="true" />
+        </many-to-one>
+        <many-to-one name="biTypesmembres" class="com.bouchardm.tp3.biblio.mapping.BiTypesmembres" fetch="select">
+            <column name="TypeMembre" length="1" not-null="true" />
+        </many-to-one>
+        <property name="nom" type="string">
+            <column name="Nom" length="50" not-null="true" />
+        </property>
+        <property name="prenom" type="string">
+            <column name="Prenom" length="50" not-null="true" />
+        </property>
+        <property name="salutation" type="string">
+            <column name="Salutation" length="20" not-null="true" />
+        </property>
+        <property name="addresse" type="string">
+            <column name="Addresse" length="100" not-null="true" />
+        </property>
+        <property name="ville" type="string">
+            <column name="Ville" length="50" not-null="true" />
+        </property>
+        <property name="codePostal" type="string">
+            <column name="CodePostal" length="7" not-null="true" />
+        </property>
+        <property name="pays" type="string">
+            <column name="Pays" length="50" not-null="true" />
+        </property>
+        <property name="noTel" type="string">
+            <column name="NoTel" length="14" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="Email" length="100" />
+        </property>
+        <property name="login" type="string">
+            <column name="Login" not-null="true" />
+        </property>
+        <property name="motPasse" type="string">
+            <column name="MotPasse" not-null="true" />
+        </property>
+        <property name="dernierLogin" type="timestamp">
+            <column name="DernierLogin" length="19" />
+        </property>
+        <property name="dateActivation" type="date">
+            <column name="DateActivation" length="10" not-null="true" />
+        </property>
+        <property name="questionSecrete" type="string">
+            <column name="QuestionSecrete" not-null="true" />
+        </property>
+        <property name="reponseSecrete" type="string">
+            <column name="ReponseSecrete" not-null="true" />
+        </property>
+        <property name="estActif" type="boolean">
+            <column name="EstActif" not-null="true" />
+        </property>
+        <property name="dateNaissance" type="date">
+            <column name="DateNaissance" length="10" not-null="true" />
+        </property>
+        <set name="biReservationses" inverse="true">
+            <key>
+                <column name="IdMembre" precision="7" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="com.bouchardm.tp3.biblio.mapping.BiReservations" />
+        </set>
+        <set name="biEmpruntses" inverse="true">
+            <key>
+                <column name="NoMembre" precision="7" scale="0" not-null="true" />
+            </key>
+            <one-to-many class="com.bouchardm.tp3.biblio.mapping.BiEmprunts" />
+        </set>
+    </class>
+</hibernate-mapping>

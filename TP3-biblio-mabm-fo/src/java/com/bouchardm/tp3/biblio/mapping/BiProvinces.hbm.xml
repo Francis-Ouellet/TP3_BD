@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2013-12-14 16:42:48 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="com.bouchardm.tp3.biblio.mapping.BiProvinces" table="bi_provinces" catalog="bibli">
+        <id name="provCode" type="string">
+            <column name="ProvCode" length="2" />
+            <generator class="assigned" />
+        </id>
+        <property name="provDescFr" type="string">
+            <column name="ProvDescFr" length="50" not-null="true" />
+        </property>
+        <property name="provDescEn" type="string">
+            <column name="ProvDescEn" length="50" not-null="true" />
+        </property>
+        <property name="pcTaxeProv" type="big_decimal">
+            <column name="PcTaxeProv" precision="3" scale="3" not-null="true" />
+        </property>
+        <property name="pcTaxeFed" type="big_decimal">
+            <column name="PcTaxeFed" precision="3" scale="3" not-null="true" />
+        </property>
+        <set name="biMembreses" inverse="true">
+            <key>
+                <column name="ProvCode" length="2" not-null="true" />
+            </key>
+            <one-to-many class="com.bouchardm.tp3.biblio.mapping.BiMembres" />
+        </set>
+        <set name="biMaisonseditionses" inverse="true">
+            <key>
+                <column name="ProvCode" length="2" not-null="true" />
+            </key>
+            <one-to-many class="com.bouchardm.tp3.biblio.mapping.BiMaisonseditions" />
+        </set>
+    </class>
+</hibernate-mapping>
