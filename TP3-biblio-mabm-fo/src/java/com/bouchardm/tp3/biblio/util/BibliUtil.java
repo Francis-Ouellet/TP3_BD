@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import org.hibernate.Query;
@@ -167,6 +168,30 @@ public class BibliUtil {
         return true;
     }
     
+    public Boolean PayerAmende(int id) {
+        BiEmprunts emprunt = this.getEmpruntById(id);
+        
+        BigDecimal zero = new BigDecimal(0);
+        
+        emprunt.setTotalAmende(zero);
+        
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            session.update(emprunt);
+            tx.commit();
+        }
+        catch(Exception e){
+            tx.rollback();
+            return false;
+        }
+        
+        
+        return true;
+    }
+    
+    
+    
     public List<BiReservations> ObtenirReservations(String username){
         
         List<BiReservations> reservations = null;
@@ -244,6 +269,19 @@ public class BibliUtil {
         }catch(Exception e){}
         
         return membre;
+    }
+    
+    private BiEmprunts getEmpruntById (int id) {
+        BiEmprunts emprunt = null;
+        
+        try{
+            Transaction tx = session.beginTransaction();
+            Query req = session.createQuery("FROM BiEmprunts emprunt WHERE emprunt.empruntId = " + id);
+            emprunt = (BiEmprunts)req.uniqueResult();
+            
+        }catch(Exception e){}
+        
+        return emprunt;
     }
     
     private String convertedToHex(byte[] data) 

@@ -128,6 +128,10 @@ public class sessionBean {
         return "message";
     }
     
+    public void PayerAmende(int idEmprunt) {
+        this.utilitaire.PayerAmende(idEmprunt);
+    }
+    
     public List<BiReservations> ObtenirReservations(){
         return this.utilitaire.ObtenirReservations(this.username);
     }
@@ -262,11 +266,5 @@ public class sessionBean {
     public void setUserMembre(String userMembre) {
         this.userMembre = userMembre;
     }
-    
-    public static boolean isNull(BigDecimal chiffre) {
-        if (chiffre == null) {
-            return true;
-        }
-        return false;
-    }
+   
 }

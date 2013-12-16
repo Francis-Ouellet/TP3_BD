@@ -23,11 +23,9 @@
 
                     <h:commandButton value="Voir les amendes du membres" action="#{sessionBean.RechercherAmendes()}"></h:commandButton>
                 </h:form>
-                
-                
                     
                 <h1>Emprunts</h1>
-                <h:dataTable value="#{sessionBean.amendeTrouve.toArray()}" var="item">
+                <h:dataTable value="#{sessionBean.amendeTrouve}" var="item">
 
                     <h:column>
                         <f:facet name="header">
@@ -41,8 +39,8 @@
                         </f:facet>
 
                         <c:if test="#{!item.totalAmende.equals(null)}">
-                            <h:form>
-                                <h:commandButton value="Payer #{item.totalAmende}" action="#" />
+                            <h:form>     
+                                <h:commandButton value="Payer #{item.totalAmende}" action="#{sessionBean.PayerAmende(item.empruntId)}" />
                             </h:form>
                         </c:if>
 
