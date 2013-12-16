@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 2013-12-14 16:42:48 by Hibernate Tools 3.2.1.GA -->
+<!-- Generated 2013-12-16 12:24:17 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
     <class name="com.bouchardm.tp3.biblio.mapping.BiMembres" table="bi_membres" catalog="bibli">
         <id name="noMembre" type="int">

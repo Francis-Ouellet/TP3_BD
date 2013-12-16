@@ -1,5 +1,5 @@
 package com.bouchardm.tp3.biblio.mapping;
-// Generated 2013-12-14 16:42:46 by Hibernate Tools 3.2.1.GA
+// Generated 2013-12-16 12:24:15 by Hibernate Tools 3.2.1.GA
 
 
 

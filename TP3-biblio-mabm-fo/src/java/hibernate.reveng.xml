@@ -15,4 +15,5 @@
   <table-filter match-name="bi_typearticles"/>
   <table-filter match-name="bi_membres"/>
   <table-filter match-name="bi_maisonseditions"/>
+  <table-filter match-name="bi_etatarticle"/>
 </hibernate-reverse-engineering>

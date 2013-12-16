@@ -21,5 +21,12 @@
     <mapping resource="com/bouchardm/tp3/biblio/mapping/BiCopiesarticles.hbm.xml"/>
     <mapping resource="com/bouchardm/tp3/biblio/mapping/BiArticles.hbm.xml"/>
     <mapping resource="com/bouchardm/tp3/biblio/mapping/BiCommentaires.hbm.xml"/>
+    <mapping/>
+    <mapping/>
+    <mapping/>
+    <mapping/>
+    <mapping/>
+    <mapping/>
+    <mapping resource="com/bouchardm/tp3/biblio/mapping/BiEtatarticle.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
