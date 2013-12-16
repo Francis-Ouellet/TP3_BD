@@ -15,16 +15,16 @@
     <h:body>
 
         <div id="top" class="top">
-            <ui:insert name="top">Top</ui:insert>
+            <ui:insert name="top"></ui:insert>
             <c:if test="#{!sessionBean.logged}">
                 <h:form>
                     <h:outputLabel for="usrName">
-                        <h:outputText value="Nom d'utilisateur"></h:outputText>
+                        <h:outputText value="Nom d'utilisateur : "></h:outputText>
                     </h:outputLabel>
                     <h:inputText id="usrName" value="#{sessionBean.username}" />
 
                     <h:outputLabel for="usrPwd">
-                        <h:outputText value="Nom d'utilisateur"></h:outputText>
+                        <h:outputText value="Mot de passe : "></h:outputText>
                     </h:outputLabel>
                     <h:inputSecret id="usrPwd" value="#{sessionBean.password}" />
 

@@ -5,8 +5,8 @@
 package com.bouchardm.tp3.biblio;
 
 import com.bouchardm.tp3.biblio.mapping.BiArticles;
+import com.bouchardm.tp3.biblio.mapping.BiReservations;
 import com.bouchardm.tp3.biblio.util.BibliUtil;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -100,14 +100,18 @@ public class sessionBean {
     
     public String Reserver(String ISBN){
         
-        if(this.utilitaire.ReserverArticle(ISBN, this.username, new Date())){
+        if(this.utilitaire.ReserverArticle(ISBN, this.username, new Date() )){
             this.message = "L'article a été réservé avec succès!";
             return "message";
         }
         this.message = "L'article n'a pas pu être réservé.";
         return "message";
     }
-
+    
+    public List<BiReservations> ObtenirReservations(){
+        return this.utilitaire.ObtenirReservations(this.username);
+    }
+    
     // Accesseurs
     
     /**

@@ -30,7 +30,7 @@
             <key>
                 <column name="AuteurID" precision="7" scale="0" not-null="true" />
             </key>
-            <many-to-many entity-name="com.bouchardm.tp3.biblio.mapping.BiArticles">
+            <many-to-many class="com.bouchardm.tp3.biblio.mapping.BiArticles">
                 <column name="ISBN" length="17" not-null="true" />
             </many-to-many>
         </set>

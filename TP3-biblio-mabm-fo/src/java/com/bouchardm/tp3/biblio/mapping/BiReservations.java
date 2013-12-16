@@ -13,6 +13,7 @@ public class BiReservations  implements java.io.Serializable {
      private BiArticles biArticles;
      private BiMembres biMembres;
      private boolean estActif;
+     private int position;
 
     public BiReservations() {
     }
@@ -51,6 +52,20 @@ public class BiReservations  implements java.io.Serializable {
     
     public void setEstActif(boolean estActif) {
         this.estActif = estActif;
+    }
+
+    /**
+     * @return the position
+     */
+    public int getPosition() {
+        return position;
+    }
+
+    /**
+     * @param position the position to set
+     */
+    public void setPosition(int position) {
+        this.position = position;
     }
 
 

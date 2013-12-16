@@ -45,7 +45,7 @@ public class BibliUtil {
         }
         try{
             // Récupère tous les articles non réservés
-            Transaction tx = session.beginTransaction();
+            session.beginTransaction();
             Query req = session.createQuery("FROM BiArticles article " + excludeReserved + " ORDER BY article.titre ");
             lstArticlesTous = (List<BiArticles>)req.list();
             
@@ -83,7 +83,7 @@ public class BibliUtil {
     public String Connexion(String username, String password){
         
         try{
-            Transaction tx =session.beginTransaction();
+            session.beginTransaction();
             Query req = session.createQuery("SELECT membre.motPasse, type.typeDescFr FROM BiMembres membre, BiTypesmembres type WHERE membre.login = '"
                     + username + "' AND type.typeMembre =  membre.biTypesmembres.typeMembre");
             Object[] resSQL = (Object[])req.uniqueResult();
@@ -146,6 +146,52 @@ public class BibliUtil {
         }
         
         return true;
+    }
+    
+    public List<BiReservations> ObtenirReservations(String username){
+        
+        List<BiReservations> reservations = null;
+        
+        try{
+            // Trouve les réservations du membre
+            session.beginTransaction();
+            Query req = session.createQuery("FROM BiReservations res WHERE res.biMembres.login = '" + username + "'");
+            reservations = (List<BiReservations>)req.list();
+            
+            BiReservations reservation;
+            List<BiReservations> autresReservations;
+            // Pour chaque réservation du membre
+            for(Iterator<BiReservations> resMembre = reservations.iterator(); resMembre.hasNext();){
+                reservation = resMembre.next();
+                
+                // Trouve les autres réservations pour cet article
+                session.beginTransaction();
+                req = session.createQuery("FROM BiReservations res WHERE res.biArticles.isbn = '" 
+                        + reservation.getBiArticles().getIsbn() + "'");
+                autresReservations = (List<BiReservations>)req.list();
+                
+                int nbResPrioritaires = 1;
+                
+                BiReservations autreReservation;
+                // Pour chacune des autres réservations de cet article
+                for(Iterator<BiReservations> autresRes = autresReservations.iterator(); autresRes.hasNext(); ){
+                    autreReservation = autresRes.next();
+                    
+                    if(reservation.getId().getDateReservation().after(autreReservation.getId().getDateReservation())){
+                        nbResPrioritaires++;
+                    }
+                    
+                }
+                
+                reservations.get(reservations.indexOf(reservation)).setPosition(nbResPrioritaires);
+                
+            }
+            
+        }catch(Exception e){
+            e.getMessage();
+        }
+        
+        return reservations;
     }
     
     
