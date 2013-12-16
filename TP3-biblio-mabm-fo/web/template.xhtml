@@ -42,7 +42,7 @@
                 <c:when test="#{sessionBean.userType.equals('membre')}" >
                     <h:form>
                         <h:commandLink action="reservations">Réservations</h:commandLink>
-                        <h:commandLink action="emprunts">Emprunts</h:commandLink>
+                        <h:commandLink action="mesEmprunts">Emprunts</h:commandLink>
                     </h:form>
                 </c:when>
                 <c:when test="#{sessionBean.userType.equals('employe')}">

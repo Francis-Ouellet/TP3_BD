@@ -206,11 +206,22 @@ public class BibliUtil {
                 
             }
             
-        }catch(Exception e){
-            e.getMessage();
-        }
+        }catch(Exception e){}
         
         return reservations;
+    }
+    
+    public List<BiEmprunts> GetEmpruntsByUser(String username){
+        List<BiEmprunts> emprunts = null;
+        
+        try{
+            session.beginTransaction();
+            Query req = session.createQuery("FROM BiEmprunts emprunt WHERE emprunt.biMembres.login = '" + username + "'");
+            emprunts = (List<BiEmprunts>)req.list();
+            
+        }catch(Exception e){}
+        
+        return emprunts;
     }
     
     

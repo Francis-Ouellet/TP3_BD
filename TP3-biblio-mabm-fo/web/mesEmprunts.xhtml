@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="./template.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <ui:define name="top">
+        
+    </ui:define>
+
+    <ui:define name="body">
+        <h:dataTable value="#{sessionBean.ObtenirEmprunts()}" var="item">
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Titre" />
+                </f:facet>
+                <h:outputText value="#{item.biCopiesarticles.biArticles.titre}" />
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Date de l'emprunt" />
+                </f:facet>
+                <h:outputText value="#{item.dateEmprunt}">
+                    <f:convertDateTime pattern="dd MMM yyyy" />
+                </h:outputText>
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Date de retour prévue" />
+                </f:facet>
+                <h:outputText value="#{item.dateRetourPrevue}">
+                    <f:convertDateTime pattern="dd MMM yyyy" />
+                </h:outputText>
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Amende à payer" />
+                </f:facet>
+                <h:outputText value="#{item.totalAmende}">
+                    <f:convertNumber pattern=".00$" />
+                </h:outputText>
+            </h:column>
+            
+        </h:dataTable>
+    </ui:define>
+
+</ui:composition>

@@ -5,9 +5,8 @@
 package com.bouchardm.tp3.biblio;
 
 import com.bouchardm.tp3.biblio.mapping.BiArticles;
-import com.bouchardm.tp3.biblio.mapping.BiReservations;
 import com.bouchardm.tp3.biblio.mapping.BiEmprunts;
-import com.bouchardm.tp3.biblio.mapping.BiMembres;
+import com.bouchardm.tp3.biblio.mapping.BiReservations;
 import com.bouchardm.tp3.biblio.util.BibliUtil;
 import java.util.Date;
 import java.util.List;
@@ -130,6 +129,10 @@ public class sessionBean {
     
     public List<BiReservations> ObtenirReservations(){
         return this.utilitaire.ObtenirReservations(this.username);
+    }
+    
+    public List<BiEmprunts> ObtenirEmprunts(){
+        return this.utilitaire.GetEmpruntsByUser(this.username);
     }
     
     // Accesseurs
@@ -261,12 +264,5 @@ public class sessionBean {
 
     public void setUserMembre(String userMembre) {
         this.userMembre = userMembre;
-    }
-    
-    public static boolean isNull(BigDecimal chiffre) {
-        if (chiffre == null) {
-            return true;
-        }
-        return false;
     }
 }
