@@ -9,22 +9,27 @@
         <ui:composition template="./template.xhtml">
 
             <ui:define name="top">
-                top
             </ui:define>
 
             <ui:define name="body">
                 <h:form>
-                    <h:outputLabel for="noMembre">
-                        <h:outputText value="Numéro d'utilisateur"></h:outputText>
-                    </h:outputLabel>
-                    <h:inputText id="noMembre" value="" />
-
-                    <h:outputLabel for="noArticle">
-                        <h:outputText value="Numéro d'article"></h:outputText>
-                    </h:outputLabel>
-                    <h:inputText id="noArticle" value="" />
-
-                    <h:commandButton value="Réserver" action="#"></h:commandButton>
+                    <div class="row">
+                        <div class="medium-5 columns">
+                            <h:outputLabel for="noMembre">
+                                <h:outputText value="Numéro d'utilisateur"></h:outputText>
+                            </h:outputLabel>
+                            <h:inputText id="noMembre" value="" />
+                        </div>
+                        <div class="medium-5 columns">
+                            <h:outputLabel for="noArticle">
+                                <h:outputText value="Numéro d'article"></h:outputText>
+                            </h:outputLabel>
+                            <h:inputText id="noArticle" value="" />
+                        </div>
+                        <div class="medium-2 columns">
+                            <h:commandButton class="button" value="Réserver" action="#"></h:commandButton>
+                        </div>
+                    </div>
                 </h:form>
             </ui:define>
 
