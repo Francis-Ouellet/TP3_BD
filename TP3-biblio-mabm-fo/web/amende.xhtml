@@ -4,63 +4,68 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:f="http://java.sun.com/jsf/core">
-
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
     <body>
         <ui:composition template="./template.xhtml">
 
             <ui:define name="top">
-                top
             </ui:define>
 
             <ui:define name="body">
-                <h:form>
+                <div class="row">
+                    <div class="medium-4 columns">
+                        <h:form>
+                            <h:outputLabel for="userMembre">
+                                <h:outputText value="Nom d'utilisateur du membre"></h:outputText>
+                            </h:outputLabel>
+                            <h:inputText id="userMembre" value="#{sessionBean.userMembre}" />
+
+                            <h:commandButton class="button" value="Voir les amendes du membres" action="#{sessionBean.RechercherAmendes()}"></h:commandButton>
+                        </h:form>
+                    </div>
                     
-                    <h:outputLabel for="userMembre">
-                        <h:outputText value="Nom d'utilisateur du membre"></h:outputText>
-                    </h:outputLabel>
-                    <h:inputText id="userMembre" value="#{sessionBean.userMembre}" />
+                    <div class="medium-8 columns">
+                        <h1>Emprunts</h1>
+                        <h:dataTable value="#{sessionBean.amendeTrouve}" var="item">
 
-                    <h:commandButton value="Voir les amendes du membres" action="#{sessionBean.RechercherAmendes()}"></h:commandButton>
-                </h:form>
-                    
-                <h1>Emprunts</h1>
-                <h:dataTable value="#{sessionBean.amendeTrouve}" var="item">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Titre"/>
+                                </f:facet>
+                                <h:outputText value="#{item.biCopiesarticles.biArticles.titre}" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Amendes" />
+                                </f:facet>
 
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="Titre"/>
-                        </f:facet>
-                        <h:outputText value="#{item.biCopiesarticles.biArticles.titre}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="Amendes" />
-                        </f:facet>
+                                <c:if test="#{item.amende != true}">
+                                    <h:form>     
+                                        <h:commandButton class="button" value="Payer #{item.totalAmende}" action="#{sessionBean.PayerAmende(item.empruntId)}" />
+                                    </h:form>
+                                </c:if>
 
-                        <c:if test="#{!item.totalAmende.equals(null)}">
-                            <h:form>     
-                                <h:commandButton value="Payer #{item.totalAmende}" action="#{sessionBean.PayerAmende(item.empruntId)}" />
-                            </h:form>
-                        </c:if>
+                            </h:column>
 
-                    </h:column>
+                            <c:if test="#{sessionBean.logged}">
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Retour d'article" />
+                                    </f:facet>
 
-                    <c:if test="#{sessionBean.logged}">
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="Retour d'article" />
-                            </f:facet>
 
-                            <h:form>
-                                <h:commandButton value="Retourner" action="#" />
-                            </h:form>
+                                    <h:form>
+                                        <h:commandButton class="button" value="Retourner" action="#{sessionBean.Retourner(item.empruntId)}" />
+                                    </h:form>
 
-                        </h:column>
-                    </c:if>
 
-                </h:dataTable>
-                
+                                </h:column>
+                            </c:if>
+
+                        </h:dataTable>
+                    </div>
+                </div>
                 
                 
                 

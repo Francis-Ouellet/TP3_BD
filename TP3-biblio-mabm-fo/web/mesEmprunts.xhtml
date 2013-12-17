@@ -11,41 +11,46 @@
     </ui:define>
 
     <ui:define name="body">
-        <h:dataTable value="#{sessionBean.ObtenirEmprunts()}" var="item">
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Titre" />
-                </f:facet>
-                <h:outputText value="#{item.biCopiesarticles.biArticles.titre}" />
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Date de l'emprunt" />
-                </f:facet>
-                <h:outputText value="#{item.dateEmprunt}">
-                    <f:convertDateTime pattern="dd MMM yyyy" />
-                </h:outputText>
-            </h:column>
-            
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Date de retour prévue" />
-                </f:facet>
-                <h:outputText value="#{item.dateRetourPrevue}">
-                    <f:convertDateTime pattern="dd MMM yyyy" />
-                </h:outputText>
-            </h:column>
-            
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Amende à payer" />
-                </f:facet>
-                <h:outputText value="#{item.totalAmende}">
-                    <f:convertNumber pattern=".00$" />
-                </h:outputText>
-            </h:column>
-            
-        </h:dataTable>
+        
+        <div class="row">
+            <div class="medium-10 columns medium-centered">
+                <h:dataTable value="#{sessionBean.ObtenirEmprunts()}" var="item">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Titre" />
+                        </f:facet>
+                        <h:outputText value="#{item.biCopiesarticles.biArticles.titre}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Date de l'emprunt" />
+                        </f:facet>
+                        <h:outputText value="#{item.dateEmprunt}">
+                            <f:convertDateTime pattern="dd MMM yyyy" />
+                        </h:outputText>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Date de retour prévue" />
+                        </f:facet>
+                        <h:outputText value="#{item.dateRetourPrevue}">
+                            <f:convertDateTime pattern="dd MMM yyyy" />
+                        </h:outputText>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Amende à payer" />
+                        </f:facet>
+                        <h:outputText value="#{item.totalAmende}">
+                            <f:convertNumber pattern=".00$" />
+                        </h:outputText>
+                    </h:column>
+
+                </h:dataTable>
+            </div>
+        </div>
     </ui:define>
 
 </ui:composition>

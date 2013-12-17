@@ -138,6 +138,10 @@ public class sessionBean {
         this.utilitaire.PayerAmende(idEmprunt);
     }
     
+    public void Retourner(int idEmprunt) {
+        this.utilitaire.Retourner(idEmprunt);
+    }
+    
     public List<BiReservations> ObtenirReservations(){
         return this.utilitaire.ObtenirReservations(this.username);
     }

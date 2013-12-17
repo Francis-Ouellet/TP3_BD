@@ -93,8 +93,21 @@ public class BibliUtil {
         try {
             // Récupère tous les articles non réservés
             Transaction tx = session.beginTransaction();
-            Query req = session.createQuery("FROM BiEmprunts emprunt WHERE emprunt.biMembres.login = '" + userMembre + "'");
+            Query req = session.createQuery("FROM BiEmprunts emprunt WHERE emprunt.dateRetour IS NOT NULL AND emprunt.totalAmende > 0 AND emprunt.biMembres.login = '" + userMembre + "'");
             lesEmprunts = (List<BiEmprunts>)req.list();
+            
+            for (Iterator<BiEmprunts> unEmprunt = lesEmprunts.iterator(); unEmprunt.hasNext();){
+                BiEmprunts emprunt = unEmprunt.next();
+                
+               if(emprunt.getTotalAmende() == null) {
+                   emprunt.setTotalAmende(BigDecimal.ZERO);
+                   emprunt.setAmende(false);
+               } else {
+                   emprunt.setAmende(true);
+               }
+                
+            }
+            
             
             return lesEmprunts;
         } catch (Exception e) {
@@ -211,6 +224,25 @@ public class BibliUtil {
         return true;
     }
     
+    public Boolean Retourner(int idEmprunt) {
+        BiEmprunts emprunt = this.getEmpruntById(idEmprunt);
+        
+        emprunt.setDateRetour(new Date());
+        
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            session.update(emprunt);
+            tx.commit();
+        }
+        catch(Exception e){
+            tx.rollback();
+            return false;
+        }
+        
+        
+        return true;
+    }
     
     
     public List<BiReservations> ObtenirReservations(String username){
@@ -473,6 +505,8 @@ public class BibliUtil {
         } 
         return buf.toString();
     } 
+
+    
     
     private static Date addDays(Date date, int days)
     {

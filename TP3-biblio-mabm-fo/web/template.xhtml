@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?> 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -7,58 +7,114 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link href="./resources/css/default.css" rel="stylesheet" type="text/css" />
-        <link href="./resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/foundation.css" rel="stylesheet" type="text/css" />
+
         <title>Facelets Template</title>
     </h:head>
 
     <h:body>
 
-        <div id="top" class="top">
             <ui:insert name="top"></ui:insert>
-            <c:if test="#{!sessionBean.logged}">
-                <h:form>
-                    <h:outputLabel for="usrName">
-                        <h:outputText value="Nom d'utilisateur : "></h:outputText>
-                    </h:outputLabel>
-                    <h:inputText id="usrName" value="#{sessionBean.username}" />
-
-                    <h:outputLabel for="usrPwd">
-                        <h:outputText value="Mot de passe : "></h:outputText>
-                    </h:outputLabel>
-                    <h:inputSecret id="usrPwd" value="#{sessionBean.password}" />
-
-                    <h:commandButton value="Connexion" action="#{sessionBean.Connexion()}"></h:commandButton>
-                </h:form>
-            </c:if>
             
-            <c:if test="#{sessionBean.logged}">
-                <h:form>
-                    <h:commandButton value="Déconnexion" action="#{sessionBean.Deconnexion()}"></h:commandButton>
-                </h:form>
-            </c:if>
-            
-            <c:choose>
-                <c:when test="#{sessionBean.userType.equals('membre')}" >
-                    <h:form>
-                        <h:commandLink action="reservations">Réservations</h:commandLink>
-                        <h:commandLink action="mesEmprunts">Emprunts</h:commandLink>
-                    </h:form>
-                </c:when>
-                <c:when test="#{sessionBean.userType.equals('employe')}">
-                    <h:form>
-                        <h:commandLink action="locations">Locations</h:commandLink>
-                        <h:commandLink action="retour">Retourner un article</h:commandLink>
-                        <h:commandLink action="amende">Voir les retards</h:commandLink>
-                    </h:form>
-                </c:when>
-            </c:choose>
-            
-        </div>
+            <nav class="top-bar" data-topbar="">
+                <ul class="title-area">
+                  <li class="name">
+                    <h1><h:link outcome="index">Accueil</h:link></h1>
+                  </li>
+                  <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+                </ul>
 
-        <div id="content" class="center_content">
-            <ui:insert name="body">Content</ui:insert>
-        </div>
+                <section class="top-bar-section">
+                    
+                    <ul class="right">
+                      
+                     
+                      
+                      <c:if test="#{sessionBean.logged}">
+                        <h:form>
+                            <h:commandButton class="button" value="Déconnexion" action="#{sessionBean.Deconnexion()}"></h:commandButton>
+                        </h:form>
+                      </c:if>
+                      
+                            <c:if test="#{!sessionBean.logged}">
+                                <li class="has-form">
+                                    <h:form>
+                                         <div class="medium-5 columns">
+                                             <div class="row">
+                                                    <div class="medium-4 columns">
+                                                       <h:outputLabel for="usrName">
+                                                          <h:outputText style="color:white" value="Nom d'utilisateur"></h:outputText>
+                                                       </h:outputLabel>
+                                                    </div>
+                                                    <div class="medium-8 columns">
+                                                       <h:inputText id="usrName" value="#{sessionBean.username}" />
+                                                    </div>
+                                             </div>
+                                         </div>
+                                        <div class="medium-5 columns">
+                                            <div class="row">
+                                                 <div class="medium-3 columns">
+                                                    <h:outputLabel for="usrPwd">
+                                                        <h:outputText style="color:white" value="Mot de passe"></h:outputText>
+                                                    </h:outputLabel>
+                                                 </div>
+                                                 <div class="medium-9 columns">
+                                                    <h:inputSecret id="usrPwd" value="#{sessionBean.password}" />
+                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="medium-2 columns">
+                                            <h:commandButton class="button" value="Connexion" action="#{sessionBean.Connexion()}"></h:commandButton>
+                                        </div>
+                                    </h:form>
+                                </li>
+                            </c:if>
+                       
+                  </ul>
+                    
+                  <!-- Right Nav Section -->
+                  <ul class="left">
+                    <c:choose>
+                        <c:when test="#{sessionBean.userType.equals('membre')}" >
+                                <li><h:link outcome="reservations">Réservations</h:link></li>
+                                <li><h:link outcome="mesEmprunts">Emprunts</h:link></li>
+                        </c:when>
+                        <c:when test="#{sessionBean.userType.equals('employe')}">
+                                <li><h:link outcome="locations">Locations</h:link></li>
+                                <li><h:link outcome="amende">Voir les retards</h:link></li>
+                        </c:when>
+                    </c:choose>
+                      
+                       
+                      
+                  </ul>
+                  
+                  
+
+                  
+                </section>
+              </nav>
+            
+            <div class="row">
+                
+                <div class="medium-12 columns panel">
+                    <div id="content" class="center_content">
+                        <ui:insert name="body">Content</ui:insert>
+                    </div>
+                </div>
+                
+                
+                
+                
+            </div>
+            
+            <script src="./resources/js/jquery.js"></script>
+            <script src="./resources/js/foundation.js"></script>
+           <script src="./resources/js/foundation.topbar.js"></script>
+           
+            <script>
+                $(document).foundation();
+              </script> 
 
     </h:body>
 

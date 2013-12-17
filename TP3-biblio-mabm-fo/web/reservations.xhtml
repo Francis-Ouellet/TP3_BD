@@ -8,40 +8,43 @@
                 xmlns:fmt="http://java.sun.com/jsp/jstl/fmt">
 
     <ui:define name="top">
-        <h:outputLink value="index.xhtml">Retour à l'accueil</h:outputLink>
     </ui:define>
 
     <ui:define name="body">
-        <h:dataTable value="#{sessionBean.ObtenirReservations()}" var="item">
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Titre"/>
-                </f:facet>
-                <h:outputText value="#{item.biArticles.titre}" />
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Date de la réservation"/>
-                </f:facet>
-                <h:outputText value="#{item.id.dateReservation}">
-                    <f:convertDateTime pattern="dd MMM yyyy" />
-                </h:outputText>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Position dans la file d'attente"/>
-                </f:facet>
-                <c:choose>
-                    <c:when test="#{item.position == 1}">
-                        <h:outputText value="#{item.position}er" />
-                       
-                    </c:when>
-                    <c:otherwise>
-                        <h:outputText value="#{item.position}e" />
-                    </c:otherwise>
-                </c:choose>
-            </h:column>
-        </h:dataTable>
+        <div class="row">
+            <div class="medium-10 columns medium-centered">
+                <h:dataTable value="#{sessionBean.ObtenirReservations()}" var="item">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Titre"/>
+                        </f:facet>
+                        <h:outputText value="#{item.biArticles.titre}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Date de la réservation"/>
+                        </f:facet>
+                        <h:outputText value="#{item.id.dateReservation}">
+                            <f:convertDateTime pattern="dd MMM yyyy" />
+                        </h:outputText>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Position dans la file d'attente"/>
+                        </f:facet>
+                        <c:choose>
+                            <c:when test="#{item.position == 1}">
+                                <h:outputText value="#{item.position}er" />
+
+                            </c:when>
+                            <c:otherwise>
+                                <h:outputText value="#{item.position}e" />
+                            </c:otherwise>
+                        </c:choose>
+                    </h:column>
+                </h:dataTable>
+            </div>
+        </div>
     </ui:define>
 
 </ui:composition>
