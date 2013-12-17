@@ -9,7 +9,7 @@
         <ui:composition template="./template.xhtml">
 
             <ui:define name="top">
-                top
+                
             </ui:define>
 
             <ui:define name="body">
@@ -17,14 +17,14 @@
                     <h:outputLabel for="noMembre">
                         <h:outputText value="Numéro d'utilisateur"></h:outputText>
                     </h:outputLabel>
-                    <h:inputText id="noMembre" value="" />
+                    <h:inputText id="noMembre" value="#{sessionBean.loc_username}" />
 
                     <h:outputLabel for="noArticle">
                         <h:outputText value="Numéro d'article"></h:outputText>
                     </h:outputLabel>
-                    <h:inputText id="noArticle" value="" />
+                    <h:inputText id="noArticle" value="#{sessionBean.loc_noArticle}" />
 
-                    <h:commandButton value="Réserver" action="#"></h:commandButton>
+                    <h:commandButton value="Réserver" action="#{sessionBean.EntrerLocation()}"></h:commandButton>
                 </h:form>
             </ui:define>
 

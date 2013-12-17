@@ -6,13 +6,16 @@ package com.bouchardm.tp3.biblio.util;
 
 import com.bouchardm.tp3.biblio.mapping.BiArticles;
 import com.bouchardm.tp3.biblio.mapping.BiAuteurs;
+import com.bouchardm.tp3.biblio.mapping.BiCopiesarticles;
 import com.bouchardm.tp3.biblio.mapping.BiEmprunts;
+import com.bouchardm.tp3.biblio.mapping.BiEtatarticle;
 import com.bouchardm.tp3.biblio.mapping.BiMembres;
 import com.bouchardm.tp3.biblio.mapping.BiReservations;
 import com.bouchardm.tp3.biblio.mapping.BiReservationsId;
 import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -154,6 +157,15 @@ public class BibliUtil {
         reservation.setId(resId);
         reservation.setEstActif(true);
         
+        // Chercher toutes les copies d'articles pour trouver une copie à réserver
+        BiCopiesarticles copieAReserver = this.FindCopieAReserver(ISBN);
+        
+        BiEtatarticle sdf = new BiEtatarticle();
+        sdf.setId(3);
+        if(copieAReserver != null ){
+            copieAReserver.setBiEtatarticle(sdf);
+        }
+        
         Transaction tx = null;
         try{
             tx = session.beginTransaction();
@@ -161,6 +173,15 @@ public class BibliUtil {
             tx.commit();
         }
         catch(Exception e){
+            tx.rollback();
+            return false;
+        }
+        tx = null;
+        try{
+            tx = session.beginTransaction();
+            session.update(copieAReserver);
+            tx.commit();
+        }catch(Exception e){
             tx.rollback();
             return false;
         }
@@ -249,12 +270,142 @@ public class BibliUtil {
         return emprunts;
     }
     
+    public Boolean EntrerLocation(String username, String ISBN, Date date){
+        
+        BiMembres membre = this.GetMembreByUsername(username);
+        BiArticles article = this.GetArticleByID(ISBN);
+        
+        BiCopiesarticles copieArticle = this.FindCopieArticleForUser(membre,article);
+        
+        if(copieArticle != null){
+            // Nouvel emprunt à écrire dans la BD
+            BiEmprunts emprunt = new BiEmprunts();
+        
+            emprunt.setBiMembres(membre);
+            emprunt.setBiCopiesarticles(copieArticle);
+            emprunt.setDateEmprunt(date);
+            emprunt.setDateRetourPrevue(this.addDays(date, membre.getBiTypesmembres().getNbJoursSurEmprunt()));
+            emprunt.setAmendeParJour(article.getBiTypearticles().getAmendeParJour());
+            emprunt.setIndicateurPerte('0');
+            emprunt.setPrixUnitaire(article.getPrixUnitaire());
+            emprunt.setEmpruntId(this.GetNextEmpruntID());
+
+            Transaction tx = null;
+            
+            try{
+                tx = session.beginTransaction();
+                session.save(emprunt);
+                tx.commit();
+                
+                return true;
+                
+            }catch(Exception e){
+                tx.rollback();
+                String test = e.getMessage();
+                test = test;
+                return false;
+                
+            }
+            
+        }
+        
+        return false;
+    }
+    
     
     /*
     
     * Fonctions Utilitaires Privées
      
     */
+    
+    private int GetNextEmpruntID(){
+        int nombre = -1;
+        
+        try{
+            session.beginTransaction();
+            Query req = session.createQuery("SELECT emprunt.empruntId FROM BiEmprunts emprunt");
+            List<Integer> nombres = (List<Integer>)req.list();
+            
+            nombre = nombres.size();
+        
+        }catch(Exception e){}
+        
+        return nombre + 1;
+    }
+    
+    private BiCopiesarticles FindCopieAReserver(String ISBN){
+        BiCopiesarticles copie = null;
+        
+        try{
+            session.beginTransaction();
+            Query req = session.createQuery("FROM BiCopiesarticles copie WHERE copie.biArticles.isbn = '"
+                    + ISBN + "' AND copie.biEtatarticle.valeur = 'DISPONIBLE'");
+            copie = (BiCopiesarticles)req.uniqueResult();
+        }catch(Exception e){}
+        
+        return copie;
+    }
+    
+    
+    
+    private BiCopiesarticles FindCopieArticleForUser(BiMembres membre, BiArticles article){
+
+        BiCopiesarticles articleALouer = null;
+        String s_req = null;
+        
+        // Vérifier si le membre a réservé l'article
+        BiReservations reservationMembre = null;
+        Boolean reserved = false;
+        Iterator<BiReservations> uneReservation = membre.getBiReservationses().iterator();
+        while ( uneReservation.hasNext() && !reserved){
+            reservationMembre = uneReservation.next();
+            
+            if (reservationMembre.getBiArticles().getIsbn().equals(article.getIsbn())){
+                reserved = true;
+            }
+            
+        }
+        
+        // Si le membre a réservé l'article, vérifier la position du membre dans la file d'attente et déterminer s'il peut louer l'article
+        if(reserved){
+            int nbResPrioritaires = 0;
+            BiReservations autreReservation;
+            // Pour chacune des autres réservations
+            for (uneReservation = article.getBiReservationses().iterator(); uneReservation.hasNext();){
+                autreReservation = uneReservation.next();
+
+                if(reservationMembre.getId().getDateReservation().after(autreReservation.getId().getDateReservation())){
+                    nbResPrioritaires++;
+                }
+            }
+            
+            if (nbResPrioritaires < article.getBiReservationses().size()){
+                s_req = "FROM BiCopiesarticles copie WHERE copie.biArticles.isbn = '"
+                        + article.getIsbn() + "' AND copie.biEtatarticle.valeur = 'RÉSERVÉ'";
+            }
+        }
+        // Si le membre n'a pas réservé l'article, chercher un article parmi les disponibles
+        else{
+            s_req = "FROM BiCopiesarticles copie WHERE copie.biArticles.isbn = '"
+                    + article.getIsbn() + "' AND copie.biEtatarticle.valeur = 'DISPONIBLE'";
+        }
+        
+        if (s_req != null){
+            try{
+                List<BiCopiesarticles> lesArticlesDispo;
+                
+                session.beginTransaction();
+                Query req = session.createQuery(s_req);
+                lesArticlesDispo = (List<BiCopiesarticles>)req.list();
+                
+                articleALouer = lesArticlesDispo.iterator().next();
+                
+            }catch(Exception e){}
+        }
+        
+        return articleALouer;
+    }
     
     private BiArticles GetArticleByID (String ISBN) {
         BiArticles article = null;
@@ -323,5 +474,11 @@ public class BibliUtil {
         return buf.toString();
     } 
     
-    
+    private static Date addDays(Date date, int days)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
+    }
 }

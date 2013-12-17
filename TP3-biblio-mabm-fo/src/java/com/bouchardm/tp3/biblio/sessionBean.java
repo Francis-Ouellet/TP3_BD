@@ -30,7 +30,9 @@ public class sessionBean {
     // Paramètres d'une recherche d'article
     private String rechTitre;
     private String rechAuteur;
-    
+    // Paramètres à entrer pour louer un article
+    private String loc_username;
+    private String loc_noArticle;
     // Articles trouvés
     private List<BiArticles> articlesTrouves;
     // Message de retour pour l'utilisateur
@@ -55,6 +57,8 @@ public class sessionBean {
         this.logged = false;
         this.rechTitre = null;
         this.rechAuteur = null;
+        this.loc_username = null;
+        this.loc_noArticle = null;
         this.articlesTrouves = null;
         this.message = null;
         this.userType = "invite";
@@ -67,6 +71,8 @@ public class sessionBean {
         this.logged = false;
         this.rechTitre = null;
         this.rechAuteur = null;
+        this.loc_username = null;
+        this.loc_noArticle = null;
         this.articlesTrouves = null;
         this.message = null;
         this.userType = userType;
@@ -121,9 +127,10 @@ public class sessionBean {
         
         if(this.utilitaire.ReserverArticle(ISBN, this.username, new Date() )){
             this.message = "L'article a été réservé avec succès!";
-            return "message";
+         
+        } else {
+            this.message = "L'article n'a pas pu être réservé.";
         }
-        this.message = "L'article n'a pas pu être réservé.";
         return "message";
     }
     
@@ -137,6 +144,16 @@ public class sessionBean {
     
     public List<BiEmprunts> ObtenirEmprunts(){
         return this.utilitaire.GetEmpruntsByUser(this.username);
+    }
+    
+    public String EntrerLocation(){
+        if (this.utilitaire.EntrerLocation(this.loc_username, this.loc_noArticle, new Date())){
+            this.message = "La location a été ajoutée avec succès.";
+        }else{
+            this.message = "Une erreur est survenue, la location n'a pas été ajoutée.";
+        }
+        
+        return "message";
     }
     
     // Accesseurs
@@ -268,5 +285,33 @@ public class sessionBean {
 
     public void setUserMembre(String userMembre) {
         this.userMembre = userMembre;
+    }
+
+    /**
+     * @return the loc_username
+     */
+    public String getLoc_username() {
+        return loc_username;
+    }
+
+    /**
+     * @param loc_username the loc_username to set
+     */
+    public void setLoc_username(String loc_username) {
+        this.loc_username = loc_username;
+    }
+
+    /**
+     * @return the loc_noArticle
+     */
+    public String getLoc_noArticle() {
+        return loc_noArticle;
+    }
+
+    /**
+     * @param loc_noArticle the loc_noArticle to set
+     */
+    public void setLoc_noArticle(String loc_noArticle) {
+        this.loc_noArticle = loc_noArticle;
     }
 }
